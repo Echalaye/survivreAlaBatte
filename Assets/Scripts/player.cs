@@ -16,28 +16,35 @@ public class player : MonoBehaviour
 
  
         if (Input.GetKey(KeyCode.A))
-            moove(Vector3.left);
+            Moove(Vector3.left);
         else if (Input.GetKey(KeyCode.D))
-            moove(Vector3.right);
-        else if (Input.GetKeyDown(KeyCode.Space) && )
-            jump();
+            Moove(Vector3.right);
+        
+        if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
+            Jump();
 
 
     }
 
-    public void moove(Vector3 Direction)
+    public void Moove(Vector3 Direction)
     {
         transform.position = Vector3.MoveTowards(transform.position, transform.position + Direction, speed * Time.deltaTime);
     }
 
 
-    public void jump()
+    public void Jump()
     {
         rb.AddForce(Vector2.up * jumpAmount, ForceMode2D.Impulse);
-
+        isJumping = true;
+        StartCoroutine(canJump());
     }
-    public void getDamage(int takenDamage)
+    public void GetDamage(int takenDamage)
     {
         health -= takenDamage;
+    }
+    IEnumerator canJump()
+    {
+        yield return new WaitForSeconds(2f);
+        isJumping = false;
     }
 }
