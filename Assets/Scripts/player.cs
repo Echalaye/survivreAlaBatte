@@ -19,24 +19,24 @@ public class player : MonoBehaviour
             moove(Vector3.left);
         else if (Input.GetKey(KeyCode.D))
             moove(Vector3.right);
-        else if (Input.GetKeyDown(KeyCode.Space) && )
+        else if (Input.GetKeyDown(KeyCode.Space))
             jump();
 
 
     }
 
-    public void moove(Vector3 Direction)
+    public void Moove(Vector3 Direction)
     {
         transform.position = Vector3.MoveTowards(transform.position, transform.position + Direction, speed * Time.deltaTime);
     }
 
 
-    public void jump()
+    public void Jump()
     {
         rb.AddForce(Vector2.up * jumpAmount, ForceMode2D.Impulse);
 
     }
-    public void getDamage(int takenDamage)
+    public void GetDamage(int takenDamage)
     {
         health -= takenDamage;
     }

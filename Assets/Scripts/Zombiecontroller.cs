@@ -5,7 +5,7 @@ using UnityEngine;
 public class Zombiecontroller : MonoBehaviour
 {
     private int health;
-    private int damage;
+    private int damageAmount = 15;
     private GameObject targetPlayer;
 
     // Start is called before the first frame update
@@ -18,10 +18,25 @@ public class Zombiecontroller : MonoBehaviour
             Debug.Log("Aucun GameObject avec le tag 'Player' n'a été trouvé.");
         }
     }
-
+    
     // Update is called once per frame
     void Update()
     {
         
     }
+
+    public void Hit()
+    {
+        player playerScript = targetPlayer.GetComponent<player>();
+        
+        if (playerScript != null)
+        {
+            playerScript.GetDamage(damageAmount);
+        }
+        else
+        {
+            Debug.Log("Aucun script Player n'a été trouvé sur le GameObject cible.");
+        }
+    }
 }
+
