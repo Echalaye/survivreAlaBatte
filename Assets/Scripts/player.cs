@@ -36,13 +36,13 @@ public class player : MonoBehaviour
     {
         rb.AddForce(Vector2.up * jumpAmount, ForceMode2D.Impulse);
         isJumping = true;
-        StartCoroutine(canJump());
+        StartCoroutine(CanJump());
     }
     public void GetDamage(int takenDamage)
     {
         health -= takenDamage;
     }
-    IEnumerator canJump()
+    IEnumerator CanJump()
     {
         yield return new WaitForSeconds(2f);
         isJumping = false;
