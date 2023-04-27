@@ -9,6 +9,7 @@ public class player : MonoBehaviour
     private bool isJumping = false;
     private float saveYpos;
     private float jumpAmount = 10;
+    private int health = 100;
     // Update is called once per frame
     void Update()
     {
@@ -18,7 +19,7 @@ public class player : MonoBehaviour
             moove(Vector3.left);
         else if (Input.GetKey(KeyCode.D))
             moove(Vector3.right);
-        else if (Input.GetKey(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space) && )
             jump();
 
 
@@ -34,5 +35,9 @@ public class player : MonoBehaviour
     {
         rb.AddForce(Vector2.up * jumpAmount, ForceMode2D.Impulse);
 
+    }
+    public void getDamage(int takenDamage)
+    {
+        health -= takenDamage;
     }
 }
