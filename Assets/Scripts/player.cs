@@ -18,16 +18,10 @@ public class player : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
             Moove(Vector3.left);
         else if (Input.GetKey(KeyCode.D))
-<<<<<<< HEAD
-            moove(Vector3.right);
-        else if (Input.GetKeyDown(KeyCode.Space))
-            jump();
-=======
             Moove(Vector3.right);
         
         if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
             Jump();
->>>>>>> 181d6a0c3f1f3a95a8fa28aba2e6d6bd0585a173
 
 
     }
