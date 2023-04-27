@@ -38,7 +38,6 @@ public class Zombiecontroller : MonoBehaviour
         if (playerScript != null)
         {
             playerScript.GetDamage(damageAmount);
-            Debug.Log("HIT !!!!");
         }
         else
         {
@@ -48,7 +47,7 @@ public class Zombiecontroller : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             Hit();
         }
