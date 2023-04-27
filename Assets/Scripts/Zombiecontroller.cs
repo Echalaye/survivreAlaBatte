@@ -5,6 +5,7 @@ using UnityEngine;
 public class Zombiecontroller : MonoBehaviour
 {
     private int health;
+    public float speed = 1f;
     private int damageAmount = 15;
     private GameObject targetPlayer;
 
@@ -22,7 +23,12 @@ public class Zombiecontroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (targetPlayer != null)
+        {
+            float step = speed * Time.deltaTime;
+
+            transform.position = Vector3.MoveTowards(transform.position, targetPlayer.transform.position, step);
+        }
     }
 
     public void Hit()
@@ -32,10 +38,19 @@ public class Zombiecontroller : MonoBehaviour
         if (playerScript != null)
         {
             playerScript.GetDamage(damageAmount);
+            Debug.Log("HIT !!!!");
         }
         else
         {
             Debug.Log("Aucun script Player n'a été trouvé sur le GameObject cible.");
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("player"))
+        {
+            Hit();
         }
     }
 }
