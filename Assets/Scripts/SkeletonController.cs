@@ -7,21 +7,25 @@ public class SkeletonController : MonoBehaviour
     private int health;
     private int damageAmount = 10;
     private GameObject targetPlayer;
+    private Rigidbody2D rb;
+
     public float speed = 1.2f;
     public float attackDistance = 4.0f;
-    // Start is called before the first frame update
+    public LayerMask groundLayer;
+    public float jumpForce = 5.0f;
     void Start()
     {
         targetPlayer = GameObject.FindGameObjectWithTag("Player");
-
+        
         if (targetPlayer == null)
         {
             Debug.Log("Aucun GameObject avec le tag 'Player' n'a été trouvé.");
         }
 
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
         if (targetPlayer != null)
@@ -35,7 +39,14 @@ public class SkeletonController : MonoBehaviour
             else
             {
                 float step = speed * Time.deltaTime;
+                // Détectez les obstacles et déclenchez le saut si nécessaire
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 1.0f, groundLayer);
                 transform.position = Vector3.MoveTowards(transform.position, targetPlayer.transform.position, step);
+                if (hit.collider != null && IsGrounded())
+                {
+                    // Appliquez la force de saut au Rigidbody2D du squelette
+                    rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                }
 
             }
 
@@ -56,8 +67,13 @@ public class SkeletonController : MonoBehaviour
             Debug.Log("Aucun script Player n'a été trouvé sur le GameObject cible.");
         }
     }
-    public void GetDamage(int takenDamage)
+
+    bool IsGrounded()
     {
-        health -= takenDamage;
+        // Vérifiez si le squelette est au sol en utilisant un raycast
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.1f, groundLayer);
+
+        return hit.collider != null;
     }
+
 }
