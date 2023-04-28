@@ -32,6 +32,8 @@ public class SkeletonController : MonoBehaviour
         {
             float distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.transform.position);
 
+
+
             if (distanceToPlayer <= attackDistance)
             { 
                 Hit();
@@ -39,15 +41,27 @@ public class SkeletonController : MonoBehaviour
             else
             {
                 float step = speed * Time.deltaTime;
+
+
                 // Détectez les obstacles et déclenchez le saut si nécessaire
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 1.0f, groundLayer);
-                transform.position = Vector3.MoveTowards(transform.position, targetPlayer.transform.position, step);
+
                 if (hit.collider != null && IsGrounded())
                 {
                     // Appliquez la force de saut au Rigidbody2D du squelette
                     rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                 }
 
+                // Détectez les trous devant le squelette
+                RaycastHit2D holeHit = Physics2D.Raycast(transform.position, Vector2.down, 1.5f, groundLayer);
+
+                if (holeHit.collider == null && IsGrounded())
+                {
+                    rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                }
+
+                // Avance vers le joueur 
+                transform.position = Vector3.MoveTowards(transform.position, targetPlayer.transform.position, step);
             }
 
         }
