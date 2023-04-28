@@ -44,7 +44,7 @@ public class SkeletonController : MonoBehaviour
 
     public void Hit()
     {
-        player playerScript = targetPlayer.GetComponent<player>();
+        Player playerScript = targetPlayer.GetComponent<Player>();
 
         if (playerScript != null)
         {

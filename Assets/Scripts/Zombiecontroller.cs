@@ -52,5 +52,10 @@ public class Zombiecontroller : MonoBehaviour
             Hit();
         }
     }
+
+    public void GetDamage(int takenDamage)
+    {
+        health -= takenDamage;
+    }
 }
 
