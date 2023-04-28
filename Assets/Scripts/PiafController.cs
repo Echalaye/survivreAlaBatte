@@ -13,6 +13,7 @@ public class PiafController : MonoBehaviour
     private int randNumber;
     private bool goLeft = false;
     private float lerpSpeed;
+    private float health = 50;
 
     // Start is called before the first frame update
     void Start()
@@ -77,6 +78,15 @@ public class PiafController : MonoBehaviour
         }
         hasAttack = true;
         StartCoroutine(SetHasAttack());
+    }
+
+    public void GetDamage(int takenDamage)
+    {
+        health -= takenDamage;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     IEnumerator SetHasAttack()

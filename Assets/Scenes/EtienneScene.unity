@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 458161894}
   - component: {fileID: 458161893}
   - component: {fileID: 458161892}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: sol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,6 +352,10 @@ PrefabInstance:
       propertyPath: m_CollisionDetection
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4976432906710557604, guid: e0e5dd30bed282b4da646edd9ddd511e, type: 3}
+      propertyPath: orthographic size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4976432907378343216, guid: e0e5dd30bed282b4da646edd9ddd511e, type: 3}
       propertyPath: m_SortingOrder
       value: 6
@@ -362,11 +366,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4976432907378343217, guid: e0e5dd30bed282b4da646edd9ddd511e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.93
+      value: 8.52
       objectReference: {fileID: 0}
     - target: {fileID: 4976432907378343217, guid: e0e5dd30bed282b4da646edd9ddd511e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.47109002
+      value: 1.38
       objectReference: {fileID: 0}
     - target: {fileID: 4976432907378343217, guid: e0e5dd30bed282b4da646edd9ddd511e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -425,11 +429,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 336635319994017112, guid: 74c35a64a8785714d91d86a8aa74b046, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.26
+      value: -0.71
       objectReference: {fileID: 0}
     - target: {fileID: 336635319994017112, guid: 74c35a64a8785714d91d86a8aa74b046, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.75
+      value: 14.72
       objectReference: {fileID: 0}
     - target: {fileID: 336635319994017112, guid: 74c35a64a8785714d91d86a8aa74b046, type: 3}
       propertyPath: m_LocalPosition.z

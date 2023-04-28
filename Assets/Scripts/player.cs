@@ -41,6 +41,10 @@ public class Player : MonoBehaviour
     public void GetDamage(int takenDamage)
     {
         health -= takenDamage;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
     IEnumerator CanJump()
     {

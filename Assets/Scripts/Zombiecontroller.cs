@@ -56,6 +56,10 @@ public class Zombiecontroller : MonoBehaviour
     public void GetDamage(int takenDamage)
     {
         health -= takenDamage;
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
 
