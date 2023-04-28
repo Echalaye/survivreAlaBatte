@@ -76,4 +76,8 @@ public class SkeletonController : MonoBehaviour
         return hit.collider != null;
     }
 
+    public void GetDamage(int takenDamage)
+    {
+        health -= takenDamage;
+    }
 }
