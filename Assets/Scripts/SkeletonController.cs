@@ -56,5 +56,8 @@ public class SkeletonController : MonoBehaviour
             Debug.Log("Aucun script Player n'a été trouvé sur le GameObject cible.");
         }
     }
-
+    public void GetDamage(int takenDamage)
+    {
+        health -= takenDamage;
+    }
 }
