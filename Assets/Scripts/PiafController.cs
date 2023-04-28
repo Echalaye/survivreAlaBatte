@@ -32,6 +32,10 @@ public class PiafController : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, posY, transform.position.z), speed * Time.deltaTime);
+        }
 
         if(goLeft) {
 
@@ -77,7 +81,6 @@ public class PiafController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         hasAttack = false;
-        transform.position = new Vector3(transform.position.x, posY, transform.position.z);
     }
 
     IEnumerator ChoosNewPlace()
