@@ -5,7 +5,7 @@ using UnityEngine;
 public class SkeletonController : MonoBehaviour
 {
     private int health;
-    private int damageAmount = 10;
+    private int damageAmount = 0;
     private GameObject targetPlayer;
     private Rigidbody2D rb;
 
@@ -44,8 +44,8 @@ public class SkeletonController : MonoBehaviour
 
 
                 // Détectez les obstacles et déclenchez le saut si nécessaire
-                RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right, 1.0f, groundLayer);
-
+                RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.right, Vector3.right, 1.0f, groundLayer);
+                Debug.DrawRay(transform.position, Vector3.right * 1, Color.green);
                 if (hit.collider != null && IsGrounded())
                 {
                     // Appliquez la force de saut au Rigidbody2D du squelette
@@ -74,7 +74,7 @@ public class SkeletonController : MonoBehaviour
         if (playerScript != null)
         {
             Debug.Log("HIT!");
-            playerScript.GetDamage(damageAmount);
+            playerScript.GetDamage(damageAmount);   
         }
         else
         {
