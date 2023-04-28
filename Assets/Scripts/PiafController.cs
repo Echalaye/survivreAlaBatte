@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PiafController : MonoBehaviour
@@ -11,9 +12,12 @@ public class PiafController : MonoBehaviour
     public float speed = 1.5f;
     private int randNumber;
     private bool goLeft = false;
+    private float lerpSpeed;
+
     // Start is called before the first frame update
     void Start()
     {
+        posY = transform.position.y;
         GetPlaceToMoove();
     }
 
@@ -29,12 +33,9 @@ public class PiafController : MonoBehaviour
                 {
                     posY = transform.position.y;
                     transform.position = new Vector3(transform.position.x, hit.transform.position.y, transform.position.z);
+                    
                 }
             }
-        }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, posY, transform.position.z), speed * Time.deltaTime);
         }
 
         if(goLeft) {
@@ -45,6 +46,7 @@ public class PiafController : MonoBehaviour
         {
             transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right, speed * Time.deltaTime);
         }
+        transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, posY, transform.position.z), 1 * Time.deltaTime);
     }
 
     public void GetPlaceToMoove()
