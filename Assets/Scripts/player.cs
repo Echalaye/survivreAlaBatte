@@ -38,13 +38,15 @@ public class Player : MonoBehaviour
         isJumping = true;
         StartCoroutine(CanJump());
     }
-    public void GetDamage(int takenDamage)
+    public void GetDamage(int takenDamage, float knockBack)
     {
         health -= takenDamage;
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
+        //if (health <= 0)
+        //{
+        //    Destroy(gameObject);
+        //}
+
+        transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z); 
     }
     IEnumerator CanJump()
     {

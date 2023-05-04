@@ -69,23 +69,27 @@ public class PiafController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().GetDamage(damage);
+            collision.gameObject.GetComponent<Player>().GetDamage(damage, 0.5f);
         }else if (collision.gameObject.CompareTag("Zombie"))
         {
-            collision.gameObject.GetComponent<Zombiecontroller>().GetDamage(damage);
+            collision.gameObject.GetComponent<Zombiecontroller>().GetDamage(damage, 0.5f);
         }else if (collision.gameObject.CompareTag("Skeleton")){
-            collision.gameObject.GetComponent<SkeletonController>().GetDamage(damage);
+            //collision.gameObject.GetComponent<SkeletonController>().GetDamage(damage, 0.5f);
         }
         hasAttack = true;
         StartCoroutine(SetHasAttack());
     }
 
-    public void GetDamage(int takenDamage)
+    public void GetDamage(int takenDamage, float knockBack)
     {
         health -= takenDamage;
         if (health <= 0)
         {
             Destroy(gameObject);
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z);
         }
     }
 

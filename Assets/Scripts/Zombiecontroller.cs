@@ -37,7 +37,7 @@ public class Zombiecontroller : MonoBehaviour
         
         if (playerScript != null)
         {
-            playerScript.GetDamage(damageAmount);
+            playerScript.GetDamage(damageAmount, 1.5f);
         }
         else
         {
@@ -53,12 +53,16 @@ public class Zombiecontroller : MonoBehaviour
         }
     }
 
-    public void GetDamage(int takenDamage)
+    public void GetDamage(int takenDamage, float knockBack)
     {
         health -= takenDamage;
         if (health <= 0)
         {
             Destroy(gameObject);
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z);
         }
     }
 }

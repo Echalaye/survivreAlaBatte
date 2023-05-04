@@ -87,7 +87,7 @@ public class SkeletonController : MonoBehaviour
         if (playerScript != null)
         {
             Debug.Log("HIT!");
-            playerScript.GetDamage(damageAmount);   
+            playerScript.GetDamage(damageAmount, 0.5f);   
         }
         else
         {
@@ -104,12 +104,16 @@ public class SkeletonController : MonoBehaviour
         /*return hit.collider != null;*/
     }
 
-    public void GetDamage(int takenDamage)
+    public void GetDamage(int takenDamage, float knockBack)
     {
         health -= takenDamage;
         if (health <= 0)
         {
             Destroy(gameObject);
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z);
         }
     }
 }
