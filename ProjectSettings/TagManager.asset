@@ -6,8 +6,10 @@ TagManager:
   tags:
   - Enemy
   - Zombie
+  - Piaf
+  - Ship
   - Skeleton
-  - Skeletton
+  - Ground
   layers:
   - Default
   - TransparentFX
