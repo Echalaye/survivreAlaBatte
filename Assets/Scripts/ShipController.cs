@@ -8,13 +8,18 @@ public class ShipController : MonoBehaviour
     private bool goLeft = false;
     public float speed = 1.5f;
     private int health = 30;
+
+    private void Start()
+    {
+        GetPlaceToMoove();
+    }
+
     // Update is called once per frame
     void Update()
     {
 
         if (goLeft)
         {
-
             transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.left, speed * Time.deltaTime);
         }
         else
@@ -37,12 +42,16 @@ public class ShipController : MonoBehaviour
         StartCoroutine(ChoosNewPlace());
     }
 
-    public void GetDamage(int takenDamage)
+    public void GetDamage(int takenDamage, float knockBack)
     {
         health -= takenDamage;
         if(health <= 0)
         {
             Destroy(gameObject);
+        }
+        else
+        {
+            transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z);
         }
     }
 

@@ -1,25 +1,95 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SwordController : MonoBehaviour
 {
-    public int damage = 15; // Dégâts infligés par l'épée
-    public string enemyTag = "Mobs"; // Le tag des objets que l'épée peut endommager
+    private int damage = 15;
+    private float knockback = 1f;
+    private List<GameObject> listAllEnemy = new List<GameObject>();
+    private bool canAtt = true;
+    private bool knockLeft = true;
+    private GameObject thePlayer;
+    private bool goodPosR = true;
+    private bool goodPosL = false;
+
+    private void Start()
+    {
+        thePlayer = GameObject.FindGameObjectWithTag("Player");
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            knockLeft = true;
+            if(!goodPosL)
+            {
+                transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
+                goodPosL = true;
+                goodPosR = false;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            knockLeft = false;
+            if(!goodPosR)
+            {
+                transform.position = new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z);
+                goodPosR = true;
+                goodPosL = false;
+            }
+
+        }
+
+
+        if (Input.GetMouseButtonDown(0) && canAtt)
+        {
+            NormalHit();
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Vérifie si l'objet en collision a le tag ennemi
-        if (collision.CompareTag(enemyTag))
+        if (!collision.CompareTag("Ground"))
         {
-            // Ajoutez ce script à vos ennemis pour gérer leur vie et les dégâts subis
-            MobHealth mobHealth = collision.GetComponent<MobHealth>();
-
-            // Inflige des dégâts à l'ennemi si le script EnemyHealth est présent
-            if (mobHealth != null)
-            {
-                mobHealth.TakeDamage(damage);
-            }
+            listAllEnemy.Add(collision.gameObject);
         }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(listAllEnemy.Contains(other.gameObject))
+        {
+            listAllEnemy.Remove(other.gameObject);
+        }
+    }
+
+    public void NormalHit()
+    {
+        if (!knockLeft)
+        {
+            knockback *= -1;
+        }
+        for(int i = 0; i < listAllEnemy.Count; i++)
+        {
+            if (listAllEnemy[i].CompareTag("Piaf"))
+                listAllEnemy[i].GetComponent<PiafController>().GetDamage(damage, knockback);
+            else if (listAllEnemy[i].CompareTag("Ship"))
+                listAllEnemy[i].GetComponent<ShipController>().GetDamage(damage, knockback);
+            else if (listAllEnemy[i].CompareTag("Skeleton"))
+                listAllEnemy[i].GetComponent<SkeletonController>().GetDamage(damage, knockback);
+            else if (listAllEnemy[i].CompareTag("Zombie"))
+                listAllEnemy[i].GetComponent<Zombiecontroller>().GetDamage(damage, knockback);
+            listAllEnemy.Remove(listAllEnemy[i]);
+        }
+        canAtt = false;
+        StartCoroutine(WaitTilNewAtt());
+    }
+
+    IEnumerator WaitTilNewAtt()
+    {
+        yield return new WaitForSeconds(0.5f);
+        canAtt = true;
     }
 }

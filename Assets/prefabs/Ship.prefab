@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8958793228438964469}
   m_Layer: 0
   m_Name: Ship
-  m_TagString: Untagged
+  m_TagString: Ship
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 711385fe7c148dc429e9ae0f16c0c878, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1.5
 --- !u!50 &8958793228438964469
 Rigidbody2D:
   serializedVersion: 4
