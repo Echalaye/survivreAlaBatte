@@ -76,8 +76,9 @@ public class SwordController : MonoBehaviour
                 listAllEnemy[i].GetComponent<SkeletonController>().GetDamage(damage, knockback);
             else if (listAllEnemy[i].CompareTag("Zombie"))
                 listAllEnemy[i].GetComponent<Zombiecontroller>().GetDamage(damage, knockback);
-            listAllEnemy.Remove(listAllEnemy[i]);
+            
         }
+        listAllEnemy.Clear();
         canAtt = false;
         StartCoroutine(WaitTilNewAtt());
     }

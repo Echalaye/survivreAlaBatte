@@ -25,7 +25,14 @@ public class Player : MonoBehaviour
 
 
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 8)
+        {
+            Physics.IgnoreCollision(this.GetComponent<Collider>(), collision.collider, true);
+        }
 
+    }
     public void Moove(Vector3 Direction)
     {
         transform.position = Vector3.MoveTowards(transform.position, transform.position + Direction, speed * Time.deltaTime);
