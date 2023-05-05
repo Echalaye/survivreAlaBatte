@@ -12,9 +12,30 @@ public class SwordController : MonoBehaviour
     private bool knockLeft = true;
     private bool goodPosR = true;
     private bool goodPosL = false;
+    private bool useSpecial = false;
+    private double timeSpecial = 0;
+    public GameObject waitIndicator1;
+    public GameObject waitIndicator2;
+    public GameObject waitIndicator3;
 
     private void Update()
     {
+        if(timeSpecial >= 2)
+        {
+            timeSpecial= 0;
+            waitIndicator3.SetActive(false); 
+            waitIndicator2.SetActive(false); 
+            waitIndicator1.SetActive(false);
+            SpecialHit();
+        }
+
+        if (timeSpecial > 1.5)
+            waitIndicator3.SetActive(true);
+        else if(timeSpecial > 1)
+            waitIndicator2.SetActive(true);
+        else if(timeSpecial > 0.5)
+            waitIndicator1.SetActive(true);
+
         if (Input.GetKeyDown(KeyCode.A))
         {
             knockLeft = true;
@@ -37,8 +58,31 @@ public class SwordController : MonoBehaviour
 
         }
 
+        if(Input.GetMouseButtonUp(1) && useSpecial)
+        {
+            if(timeSpecial < 1.5)
+            {
+                timeSpecial = 0;
+                NormalHit();
+            }
+            else
+            {
+                waitIndicator3.SetActive(false);
+                waitIndicator2.SetActive(false);
+                waitIndicator1.SetActive(false);
+                SpecialHit();
+            }
+        }
 
-        if (Input.GetMouseButtonDown(0) && canAtt)
+        if(Input.GetMouseButton(1) && canAtt)
+        {
+            useSpecial= true;
+            timeSpecial += Time.deltaTime;
+        }
+
+
+
+        if (Input.GetMouseButtonDown(0) && canAtt && !useSpecial)
         {
             NormalHit();
         }
@@ -78,14 +122,42 @@ public class SwordController : MonoBehaviour
                 listAllEnemy[i].GetComponent<Zombiecontroller>().GetDamage(damage, knockback);
             
         }
+        knockback = 1f;
         listAllEnemy.Clear();
         canAtt = false;
-        StartCoroutine(WaitTilNewAtt());
+        StartCoroutine(WaitTilNewAtt(0.5f));
     }
 
-    IEnumerator WaitTilNewAtt()
+    public void SpecialHit()
     {
-        yield return new WaitForSeconds(0.5f);
+        knockback *= 2 ;
+        damage *= 2;
+        if (!knockLeft)
+        {
+            knockback *= -1;
+        }
+        for (int i = 0; i < listAllEnemy.Count; i++)
+        {
+            if (listAllEnemy[i].CompareTag("Piaf"))
+                listAllEnemy[i].GetComponent<PiafController>().GetDamage(damage, knockback);
+            else if (listAllEnemy[i].CompareTag("Ship"))
+                listAllEnemy[i].GetComponent<ShipController>().GetDamage(damage, knockback);
+            else if (listAllEnemy[i].CompareTag("Skeleton"))
+                listAllEnemy[i].GetComponent<SkeletonController>().GetDamage(damage, knockback);
+            else if (listAllEnemy[i].CompareTag("Zombie"))
+                listAllEnemy[i].GetComponent<Zombiecontroller>().GetDamage(damage, knockback);
+
+        }
+        knockback = 1f;
+        damage = 15;
+        listAllEnemy.Clear();
+        canAtt = false;
+        StartCoroutine(WaitTilNewAtt(1f));
+    }
+
+    IEnumerator WaitTilNewAtt(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         canAtt = true;
     }
 }
