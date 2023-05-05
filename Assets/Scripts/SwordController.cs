@@ -10,14 +10,9 @@ public class SwordController : MonoBehaviour
     private List<GameObject> listAllEnemy = new List<GameObject>();
     private bool canAtt = true;
     private bool knockLeft = true;
-    private GameObject thePlayer;
     private bool goodPosR = true;
     private bool goodPosL = false;
 
-    private void Start()
-    {
-        thePlayer = GameObject.FindGameObjectWithTag("Player");
-    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
