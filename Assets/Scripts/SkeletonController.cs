@@ -9,6 +9,8 @@ public class SkeletonController : MonoBehaviour
     private GameObject targetPlayer;
     private Rigidbody2D rb;
     private bool canJump = true;
+    private float knockback = 0.5f;
+    private bool knockLeft = true;
 
     public float speed = 1.8f;
     public float attackDistance = 4.0f;
@@ -35,6 +37,10 @@ public class SkeletonController : MonoBehaviour
 
             if (distanceToPlayer <= attackDistance)
             { 
+                if(transform.position.x > targetPlayer.transform.position.x)
+                {
+                    knockLeft = false;
+                }
                 Hit();
             }
             else
@@ -86,8 +92,10 @@ public class SkeletonController : MonoBehaviour
 
         if (playerScript != null)
         {
-            Debug.Log("HIT!");
-            playerScript.GetDamage(damageAmount, 0.5f);   
+            if (!knockLeft)
+                knockback = -knockback;
+            playerScript.GetDamage(damageAmount, knockback);
+            knockback = 0.5f;
         }
         else
         {

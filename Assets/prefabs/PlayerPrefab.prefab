@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4976432906710557605}
   - component: {fileID: 4976432906710557604}
   - component: {fileID: 4976432906710557603}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 4976432907378343231}
   - component: {fileID: 4813346032708601311}
   - component: {fileID: 8372961630947696228}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: PlayerPrefab
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -259,9 +259,21 @@ PrefabInstance:
     serializedVersion: 2
     m_TransformParent: {fileID: 4976432907378343217}
     m_Modifications:
+    - target: {fileID: 1591309372515781360, guid: e2f45cd294df8b94b975bceb36b1ae9e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2235232871871316343, guid: e2f45cd294df8b94b975bceb36b1ae9e, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7281328583379740851, guid: e2f45cd294df8b94b975bceb36b1ae9e, type: 3}
       propertyPath: m_Name
       value: Hache
+      objectReference: {fileID: 0}
+    - target: {fileID: 7281328583379740851, guid: e2f45cd294df8b94b975bceb36b1ae9e, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7281328583379740851, guid: e2f45cd294df8b94b975bceb36b1ae9e, type: 3}
       propertyPath: m_IsActive
@@ -379,6 +391,10 @@ PrefabInstance:
     - target: {fileID: 3140469411959028736, guid: b1e08e6feabbcf9449a0a755bdc6ea63, type: 3}
       propertyPath: m_Name
       value: Sword
+      objectReference: {fileID: 0}
+    - target: {fileID: 3140469411959028736, guid: b1e08e6feabbcf9449a0a755bdc6ea63, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

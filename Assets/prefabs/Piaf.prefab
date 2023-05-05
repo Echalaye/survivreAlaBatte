@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 948468361979704474}
   - component: {fileID: -1807230684743788412}
   - component: {fileID: 5392608306009549470}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Piaf
   m_TagString: Piaf
   m_Icon: {fileID: 0}

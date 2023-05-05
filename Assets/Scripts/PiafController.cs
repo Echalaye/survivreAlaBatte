@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -14,6 +15,7 @@ public class PiafController : MonoBehaviour
     private bool goLeft = false;
     private float lerpSpeed;
     private float health = 50;
+    private float knockback = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -69,12 +71,28 @@ public class PiafController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().GetDamage(damage, 0.5f);
+            if(transform.position.x > collision.gameObject.transform.position.x)
+            {
+                knockback = -knockback;
+            }
+            collision.gameObject.GetComponent<Player>().GetDamage(damage, knockback);
+            knockback = 0.5f;
         }else if (collision.gameObject.CompareTag("Zombie"))
         {
+            if (transform.position.x > collision.gameObject.transform.position.x)
+            {
+                knockback = -knockback;
+            }
             collision.gameObject.GetComponent<Zombiecontroller>().GetDamage(damage, 0.5f);
-        }else if (collision.gameObject.CompareTag("Skeleton")){
-            //collision.gameObject.GetComponent<SkeletonController>().GetDamage(damage, 0.5f);
+            knockback = 0.5f;
+        }
+        else if (collision.gameObject.CompareTag("Skeleton")){
+            if (transform.position.x > collision.gameObject.transform.position.x)
+            {
+                knockback = -knockback;
+            }
+            collision.gameObject.GetComponent<SkeletonController>().GetDamage(damage, 0.5f);
+            knockback = 0.5f;
         }
         hasAttack = true;
         StartCoroutine(SetHasAttack());

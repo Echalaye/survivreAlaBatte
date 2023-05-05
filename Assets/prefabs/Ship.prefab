@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -3737633749169796935}
   - component: {fileID: 6394169254402812259}
   - component: {fileID: 8958793228438964469}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ship
   m_TagString: Ship
   m_Icon: {fileID: 0}
