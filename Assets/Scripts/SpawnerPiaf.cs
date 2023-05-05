@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerSkeleton : MonoBehaviour
+public class SpawnerPiaf : MonoBehaviour
 {
-    public GameObject Skeleton;
-    public int maxSkeletons = 2;
+    public GameObject Piaf;
+    public int maxPiafs = 6;
 
-    private int currentSkeletons= 0;
+    private int currentPiafs = 0;
     private GameObject playerCharacter;
-    private bool canSpawnSkeleton = true;
+    private bool canSpawnPiaf = false;
     private double timeWaitUntilNight = 30.0;
     private double timeUntilSpawn = 10;
     private float timeWaitDayPeriod = 0;
@@ -24,18 +24,18 @@ public class SpawnerSkeleton : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (canSpawnSkeleton)
+        if (canSpawnPiaf)
         {
-            currentSkeletons = GameObject.FindGameObjectsWithTag("Zombie").Length;
+            currentPiafs = GameObject.FindGameObjectsWithTag("Piaf").Length;
         }
 
-        if (canSpawnSkeleton  && (currentSkeletons < maxSkeletons))
+        if (canSpawnPiaf  && (currentPiafs < maxPiafs))
         {
             if (time > timeUntilSpawn)
             {
-                GameObject spawnedSkeleton = Instantiate(Skeleton);
-                spawnedSkeleton.transform.position = transform.position + new Vector3(Random.Range(playerCharacter.transform.position.x - 20, playerCharacter.transform.position.x + 20), 5, 0);
-                currentSkeletons++;
+                GameObject spawnedPiaf = Instantiate(Piaf);
+                spawnedPiaf.transform.position = transform.position + new Vector3(Random.Range(playerCharacter.transform.position.x - 20, playerCharacter.transform.position.x + 20), 5, 0);
+                currentPiafs++;
                 time = 0;
             }
             
@@ -43,7 +43,7 @@ public class SpawnerSkeleton : MonoBehaviour
         }
         if (timeWaitDayPeriod > timeWaitUntilNight)
         {
-            canSpawnSkeleton = !canSpawnSkeleton;
+            canSpawnPiaf = !canSpawnPiaf;
             timeWaitDayPeriod = 0;
         }
         Debug.Log("Time until night : " + timeWaitDayPeriod + "\ntime Spawn : " + time);
