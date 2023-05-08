@@ -22,7 +22,8 @@ public class SwordController : MonoBehaviour
     {
         if(timeSpecial >= 2)
         {
-            timeSpecial= 0;
+            useSpecial = false;
+            timeSpecial = 0;
             waitIndicator3.SetActive(false); 
             waitIndicator2.SetActive(false); 
             waitIndicator1.SetActive(false);
@@ -72,6 +73,7 @@ public class SwordController : MonoBehaviour
                 waitIndicator1.SetActive(false);
                 SpecialHit();
             }
+            useSpecial= false;
         }
 
         if(Input.GetMouseButton(1) && canAtt)
