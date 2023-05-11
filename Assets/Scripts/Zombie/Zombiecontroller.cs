@@ -10,6 +10,7 @@ public class Zombiecontroller : MonoBehaviour
     private GameObject targetPlayer;
     private float knockback = 1.5f;
     private bool knockLeft = true;
+    private bool canMoove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -25,20 +26,23 @@ public class Zombiecontroller : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (targetPlayer != null)
+        if(canMoove)
         {
-            float step = speed * Time.deltaTime;
-
-            if(transform.position.x < targetPlayer.transform.position.x)
+            if (targetPlayer != null)
             {
-                knockLeft = false;
-            }
-            else
-            {
-                knockLeft = true;
-            }
+                float step = speed * Time.deltaTime;
 
-            transform.position = Vector3.MoveTowards(transform.position, targetPlayer.transform.position, step);
+                if(transform.position.x < targetPlayer.transform.position.x)
+                {
+                    knockLeft = false;
+                }
+                else
+                {
+                    knockLeft = true;
+                }
+
+                transform.position = Vector3.MoveTowards(transform.position, targetPlayer.transform.position, step);
+            }
         }
     }
 
@@ -78,6 +82,18 @@ public class Zombiecontroller : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z);
         }
+    }
+    public void SetCanMoove(bool value)
+    {
+        canMoove = value;
+        StartCoroutine(canMooveAgain());
+    }
+
+    IEnumerator canMooveAgain()
+    {
+        yield return new WaitForSeconds(2f);
+        canMoove = true;
+        GetComponent<Rigidbody2D>().gravityScale = 1;
     }
 }
 

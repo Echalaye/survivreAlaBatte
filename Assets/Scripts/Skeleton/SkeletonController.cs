@@ -11,6 +11,7 @@ public class SkeletonController : MonoBehaviour
     private bool canJump = true;
     private float knockback = 0.5f;
     private bool knockLeft = true;
+    private bool canMoove = true;
 
     public float speed = 1.8f;
     public float attackDistance = 4.0f;
@@ -30,59 +31,62 @@ public class SkeletonController : MonoBehaviour
 
     void Update()
     {
-        if (targetPlayer != null)
+        if (canMoove)
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.transform.position);
-
-
-            if (distanceToPlayer <= attackDistance)
-            { 
-                if(transform.position.x > targetPlayer.transform.position.x)
-                {
-                    knockLeft = false;
-                }
-                Hit();
-            }
-            else
+            if (targetPlayer != null)
             {
-                float step = speed * Time.deltaTime;
-                Debug.DrawRay(transform.position, Vector3.right * 0.5f, Color.green);
+                float distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.transform.position);
 
-                if (canJump)
-                {
-                    // Détectez les obstacles et déclenchez le saut si nécessaire
-                    RaycastHit2D hitR = Physics2D.Raycast(transform.position + Vector3.right, Vector3.right, 0.5f);
-                    RaycastHit2D hitL = Physics2D.Raycast(transform.position + Vector3.left, Vector3.left, 0.5f);
-                    if (hitR.collider != null || hitL.collider != null)
+
+                if (distanceToPlayer <= attackDistance)
+                { 
+                    if(transform.position.x > targetPlayer.transform.position.x)
                     {
-                        Debug.Log("AAAAAAAAAAAAAAh");
-                        // Appliquez la force de saut au Rigidbody2D du squelette
-                        rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-                        canJump = false;
-                        //StartCoroutine(JumpAgain());
+                        knockLeft = false;
                     }
-
-                    // Détectez les trous devant le squelette
-                    RaycastHit2D holeHitR = Physics2D.Raycast(transform.position + Vector3.right * 0.80f, Vector3.down * 1f, groundLayer);
-                    RaycastHit2D holeHitL = Physics2D.Raycast(transform.position + Vector3.left * 0.80f, Vector3.down * 1f, groundLayer);
-                    Debug.DrawRay(transform.position + Vector3.right * 0.80f, Vector3.down * 1f, Color.red);
-
-
-                    if ((holeHitR.collider == null || holeHitL.collider == null))
-                    {
-                        Debug.Log("TROOOOOOOOOOOOOOOOOU");
-                        rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-                        canJump = false;
-                    }
+                    Hit();
                 }
-                    // Avance vers le joueur 
-                    transform.position = Vector3.MoveTowards(transform.position, targetPlayer.transform.position, step);
-            }
-            if (!canJump)
-            {
-                Invoke("IsGrounded", 5);
-            }
+                else
+                {
+                    float step = speed * Time.deltaTime;
+                    Debug.DrawRay(transform.position, Vector3.right * 0.5f, Color.green);
 
+                    if (canJump)
+                    {
+                        // Détectez les obstacles et déclenchez le saut si nécessaire
+                        RaycastHit2D hitR = Physics2D.Raycast(transform.position + Vector3.right, Vector3.right, 0.5f);
+                        RaycastHit2D hitL = Physics2D.Raycast(transform.position + Vector3.left, Vector3.left, 0.5f);
+                        if (hitR.collider != null || hitL.collider != null)
+                        {
+                            Debug.Log("AAAAAAAAAAAAAAh");
+                            // Appliquez la force de saut au Rigidbody2D du squelette
+                            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                            canJump = false;
+                            //StartCoroutine(JumpAgain());
+                        }
+
+                        // Détectez les trous devant le squelette
+                        RaycastHit2D holeHitR = Physics2D.Raycast(transform.position + Vector3.right * 0.80f, Vector3.down * 1f, groundLayer);
+                        RaycastHit2D holeHitL = Physics2D.Raycast(transform.position + Vector3.left * 0.80f, Vector3.down * 1f, groundLayer);
+                        Debug.DrawRay(transform.position + Vector3.right * 0.80f, Vector3.down * 1f, Color.red);
+
+
+                        if ((holeHitR.collider == null || holeHitL.collider == null))
+                        {
+                            Debug.Log("TROOOOOOOOOOOOOOOOOU");
+                            rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                            canJump = false;
+                        }
+                    }
+                        // Avance vers le joueur 
+                        transform.position = Vector3.MoveTowards(transform.position, targetPlayer.transform.position, step);
+                }
+                if (!canJump)
+                {
+                    Invoke("IsGrounded", 5);
+                }
+
+            }
         }
     }
     public void Hit()
@@ -123,4 +127,18 @@ public class SkeletonController : MonoBehaviour
             transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z);
         }
     }
+
+    public void SetCanMoove(bool value)
+    {
+        canMoove = value;
+        StartCoroutine(canMooveAgain());
+    }
+
+    IEnumerator canMooveAgain()
+    {
+        yield return new WaitForSeconds(2f);
+        canMoove = true;
+        GetComponent<Rigidbody2D>().gravityScale = 1;
+    }
+
 }

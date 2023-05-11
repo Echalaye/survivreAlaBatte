@@ -9,6 +9,10 @@ public class BowController : MonoBehaviour
     public GameObject waitIndicator1;
     public GameObject waitIndicator2;
     public GameObject waitIndicator3;
+
+    private Vector2 mousePos;
+    private Vector2 direction;
+    private Vector2 bowPos;
     private double timeUntilRelease = 0;
     private bool canAtt = true;
     private bool goodPosR = true;
@@ -16,9 +20,16 @@ public class BowController : MonoBehaviour
     private bool useBow = false;
     private float arrowPower = 0;
 
+
+
     // Update is called once per frame
     void Update()
     {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        bowPos = transform.position;
+        direction = mousePos - bowPos;
+
+
 
         if (timeUntilRelease >= 2)
         {
@@ -76,7 +87,7 @@ public class BowController : MonoBehaviour
 
     public void Shoot()
     {
-        GameObject spawnedArrow = Instantiate(arrow, transform.position, transform.rotation);
+        GameObject spawnedArrow = Instantiate(arrow, direction, transform.rotation);
         spawnedArrow.transform.position = transform.position;
         if (timeUntilRelease >= 1.5)
             arrowPower = 20f;

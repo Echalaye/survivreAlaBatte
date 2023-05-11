@@ -16,6 +16,7 @@ public class PiafController : MonoBehaviour
     private float lerpSpeed;
     private float health = 50;
     private float knockback = 0.5f;
+    private bool canMoove = true;
 
     // Start is called before the first frame update
     void Start()
@@ -27,29 +28,32 @@ public class PiafController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasAttack)
+        if (canMoove)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.down, Vector3.down, 1000000f);
-            if (hit.collider != null)
+            if (!hasAttack)
             {
-                if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Zombie") || hit.collider.CompareTag("Skeleton"))
+                RaycastHit2D hit = Physics2D.Raycast(transform.position + Vector3.down, Vector3.down, 1000000f);
+                if (hit.collider != null)
                 {
-                    posY = transform.position.y;
-                    transform.position = new Vector3(transform.position.x, hit.transform.position.y, transform.position.z);
+                    if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Zombie") || hit.collider.CompareTag("Skeleton"))
+                    {
+                        posY = transform.position.y;
+                        transform.position = new Vector3(transform.position.x, hit.transform.position.y, transform.position.z);
                     
+                    }
                 }
             }
-        }
 
-        if(goLeft) {
+            if(goLeft) {
 
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.left, speed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.left, speed * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right, speed * Time.deltaTime);
+            }
+            transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, posY, transform.position.z), 1 * Time.deltaTime);
         }
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right, speed * Time.deltaTime);
-        }
-        transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, posY, transform.position.z), 1 * Time.deltaTime);
     }
 
     public void GetPlaceToMoove()
@@ -110,7 +114,18 @@ public class PiafController : MonoBehaviour
             transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z);
         }
     }
+    public void SetCanMoove(bool value)
+    {
+        canMoove = value;
+        StartCoroutine(canMooveAgain());
+    }
 
+    IEnumerator canMooveAgain()
+    {
+        yield return new WaitForSeconds(2f);
+        canMoove = true;
+        GetComponent<Rigidbody2D>().gravityScale = 1;
+    }
     IEnumerator SetHasAttack()
     {
         yield return new WaitForSeconds(2f);

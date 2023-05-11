@@ -8,7 +8,7 @@ public class ShipController : MonoBehaviour
     private bool goLeft = false;
     public float speed = 1.5f;
     private int health = 30;
-
+    private bool canMoove = true;
     private void Start()
     {
         GetPlaceToMoove();
@@ -17,14 +17,16 @@ public class ShipController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        if (goLeft)
+        if (canMoove)
         {
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.left, speed * Time.deltaTime);
-        }
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right, speed * Time.deltaTime);
+            if (goLeft)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.left, speed * Time.deltaTime);
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right, speed * Time.deltaTime);
+            }
         }
     }
     public void GetPlaceToMoove()
@@ -60,6 +62,19 @@ public class ShipController : MonoBehaviour
         {
             transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z);
         }
+    }
+
+    public void SetCanMoove(bool value)
+    {
+        canMoove = value;
+        StartCoroutine(canMooveAgain());
+    }
+
+    IEnumerator canMooveAgain()
+    {
+        yield return new WaitForSeconds(2f);
+        canMoove = true;
+        GetComponent<Rigidbody2D>().gravityScale = 1;
     }
 
     IEnumerator ChoosNewPlace()
