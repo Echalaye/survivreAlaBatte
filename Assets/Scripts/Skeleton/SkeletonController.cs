@@ -133,7 +133,20 @@ public class SkeletonController : MonoBehaviour
         canMoove = value;
         StartCoroutine(canMooveAgain());
     }
-
+    public bool GetCanMoove()
+    {
+        return canMoove;
+    }
+    public void GigaBatHitMe(float velX, float velY)
+    {
+        rb.velocity = new Vector2(velX, velY);
+        StartCoroutine(KillingByTheBat());
+    }
+    IEnumerator KillingByTheBat()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+    }
     IEnumerator canMooveAgain()
     {
         yield return new WaitForSeconds(2f);

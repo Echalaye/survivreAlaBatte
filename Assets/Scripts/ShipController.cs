@@ -9,6 +9,7 @@ public class ShipController : MonoBehaviour
     public float speed = 1.5f;
     private int health = 30;
     private bool canMoove = true;
+    public Rigidbody2D rb;
     private void Start()
     {
         GetPlaceToMoove();
@@ -64,10 +65,27 @@ public class ShipController : MonoBehaviour
         }
     }
 
+    public void GigaBatHitMe(float velX, float velY)
+    {
+        rb.velocity = new Vector2(velX, velY);
+        StartCoroutine(KillingByTheBat());
+    }
+
     public void SetCanMoove(bool value)
     {
         canMoove = value;
         StartCoroutine(canMooveAgain());
+    }
+
+    public bool GetCanMoove()
+    {
+        return canMoove;
+    }
+
+    IEnumerator KillingByTheBat()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 
     IEnumerator canMooveAgain()

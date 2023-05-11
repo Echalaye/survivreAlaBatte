@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Zombiecontroller : MonoBehaviour
 {
+    public Rigidbody2D rb;
     private int health = 80;
     public float speed = 1f;
     private int damageAmount = 15;
@@ -88,7 +89,20 @@ public class Zombiecontroller : MonoBehaviour
         canMoove = value;
         StartCoroutine(canMooveAgain());
     }
-
+    public bool GetCanMoove()
+    {
+        return canMoove;
+    }
+    public void GigaBatHitMe(float velX, float velY)
+    {
+        rb.velocity = new Vector2(velX, velY);
+        StartCoroutine(KillingByTheBat());
+    }
+    IEnumerator KillingByTheBat()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
+    }
     IEnumerator canMooveAgain()
     {
         yield return new WaitForSeconds(2f);

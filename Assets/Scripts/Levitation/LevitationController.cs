@@ -11,6 +11,8 @@ public class LevitationController : MonoBehaviour
     public GameObject waitIndicator3;
     private double timePowerLevitation = 0;
     private bool canAtt = true;
+    private bool goodPosR = true;
+    private bool goodPosL = false;
 
     void Update()
     {
@@ -30,6 +32,27 @@ public class LevitationController : MonoBehaviour
         else if (timePowerLevitation > 0.5)
             waitIndicator1.SetActive(true);
 
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            if (!goodPosL)
+            {
+                transform.position = new Vector3(transform.position.x - 1.6f, transform.position.y, transform.position.z);
+                transform.Rotate(0, 180, 0);
+                goodPosL = true;
+                goodPosR = false;
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            if (!goodPosR)
+            {
+                transform.position = new Vector3(transform.position.x + 1.6f, transform.position.y, transform.position.z);
+                transform.Rotate(0, 180, 0);
+                goodPosR = true;
+                goodPosL = false;
+            }
+
+        }
 
         if (Input.GetMouseButtonUp(0) && canAtt)
         {

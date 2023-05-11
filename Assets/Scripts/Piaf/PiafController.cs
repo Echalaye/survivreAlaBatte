@@ -7,6 +7,7 @@ using UnityEngine;
 
 public class PiafController : MonoBehaviour
 {
+    public Rigidbody2D rb;
     private int damage = 10;
     private bool hasAttack = false;
     private float posY;
@@ -118,6 +119,21 @@ public class PiafController : MonoBehaviour
     {
         canMoove = value;
         StartCoroutine(canMooveAgain());
+    }
+    public bool GetCanMoove()
+    {
+        return canMoove;
+    }
+
+    public void GigaBatHitMe(float velX, float velY)
+    {
+        rb.velocity = new Vector2(velX, velY);
+        StartCoroutine(KillingByTheBat());
+    }
+    IEnumerator KillingByTheBat()
+    {
+        yield return new WaitForSeconds(2f);
+        Destroy(gameObject);
     }
 
     IEnumerator canMooveAgain()
