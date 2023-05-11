@@ -41,7 +41,14 @@ public class ShipController : MonoBehaviour
         }
         StartCoroutine(ChoosNewPlace());
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 8)
+        {
+            Physics.IgnoreCollision(this.GetComponent<Collider>(), collision.collider, true);
+        }
 
+    }
     public void GetDamage(int takenDamage, float knockBack)
     {
         health -= takenDamage;

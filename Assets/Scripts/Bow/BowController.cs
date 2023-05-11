@@ -14,6 +14,7 @@ public class BowController : MonoBehaviour
     private bool goodPosR = true;
     private bool goodPosL = false;
     private bool useBow = false;
+    private float arrowPower = 0;
 
     // Update is called once per frame
     void Update()
@@ -27,6 +28,14 @@ public class BowController : MonoBehaviour
             waitIndicator1.SetActive(false);
             Shoot();
         }
+
+        if (timeUntilRelease > 1.5)
+            waitIndicator3.SetActive(true);
+        else if (timeUntilRelease > 1)
+            waitIndicator2.SetActive(true);
+        else if (timeUntilRelease > 0.5)
+            waitIndicator1.SetActive(true);
+
         if (Input.GetKeyDown(KeyCode.A) && canAtt)
         {
             if (!goodPosL)
@@ -49,7 +58,7 @@ public class BowController : MonoBehaviour
 
         }
 
-        if (Input.GetMouseButtonUp(1) && useBow)
+        if (Input.GetMouseButtonUp(0) && useBow)
         {
             waitIndicator3.SetActive(false);
             waitIndicator2.SetActive(false);
@@ -58,7 +67,7 @@ public class BowController : MonoBehaviour
             Shoot();
         }
 
-        if (Input.GetMouseButton(1) && canAtt)
+        if (Input.GetMouseButton(0) && canAtt)
         {
             timeUntilRelease += Time.deltaTime;
             useBow= true;
@@ -67,8 +76,25 @@ public class BowController : MonoBehaviour
 
     public void Shoot()
     {
-        GameObject spawnedArrow = Instantiate(arrow);
+        GameObject spawnedArrow = Instantiate(arrow, transform.position, transform.rotation);
         spawnedArrow.transform.position = transform.position;
+        if (timeUntilRelease >= 1.5)
+            arrowPower = 20f;
+        else if (timeUntilRelease >= 1)
+            arrowPower = 15f;
+        else if (timeUntilRelease >= 0.5)
+            arrowPower = 10f;
+        else
+            arrowPower = 5f;
+        canAtt = false;
+        timeUntilRelease= 0;
+        spawnedArrow.GetComponent<ArrowController>().SetValueArrow(arrowPower, goodPosL);
+        StartCoroutine(WaitTilNewAtt(1.5f));
+    }
 
+    IEnumerator WaitTilNewAtt(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canAtt = true;
     }
 }

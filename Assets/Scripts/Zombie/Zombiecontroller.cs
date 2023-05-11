@@ -58,6 +58,7 @@ public class Zombiecontroller : MonoBehaviour
             Debug.Log("Aucun script Player n'a été trouvé sur le GameObject cible.");
         }
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
