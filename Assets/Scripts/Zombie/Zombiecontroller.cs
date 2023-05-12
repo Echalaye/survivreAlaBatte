@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Zombiecontroller : MonoBehaviour
+public class ZombieController : MonoBehaviour
 {
     public Rigidbody2D rb;
     private int health = 80;

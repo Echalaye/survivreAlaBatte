@@ -9,10 +9,8 @@ public class SpawnerPiaf : MonoBehaviour
 
     private int currentPiafs = 0;
     private GameObject playerCharacter;
-    private bool canSpawnPiaf = false;
-    private double timeWaitUntilNight = 30.0;
+    private bool canSpawnPiaf = true;
     private double timeUntilSpawn = 10;
-    private float timeWaitDayPeriod = 0;
     private float time = 0;
 
     // Start is called before the first frame update
@@ -26,28 +24,21 @@ public class SpawnerPiaf : MonoBehaviour
     {
         if (canSpawnPiaf)
         {
-            currentPiafs = GameObject.FindGameObjectsWithTag("Piaf").Length;
+            currentPiafs = GameObject.FindGameObjectsWithTag("Zombie").Length;
         }
 
-        if (canSpawnPiaf  && (currentPiafs < maxPiafs))
+        if (currentPiafs < maxPiafs)
         {
             if (time > timeUntilSpawn)
             {
                 GameObject spawnedPiaf = Instantiate(Piaf);
-                spawnedPiaf.transform.position = transform.position + new Vector3(Random.Range(playerCharacter.transform.position.x - 20, playerCharacter.transform.position.x + 20), 5, 0);
+                spawnedPiaf.transform.position = new Vector3(Random.Range(playerCharacter.transform.position.x - 20, playerCharacter.transform.position.x + 20), Random.Range(5, 20), 0);
                 currentPiafs++;
                 time = 0;
             }
-            
+
             time += Time.deltaTime;
         }
-        if (timeWaitDayPeriod > timeWaitUntilNight)
-        {
-            canSpawnPiaf = !canSpawnPiaf;
-            timeWaitDayPeriod = 0;
-        }
-        Debug.Log("Time until night : " + timeWaitDayPeriod + "\ntime Spawn : " + time);
-        timeWaitDayPeriod += Time.deltaTime;
     }
 
 }

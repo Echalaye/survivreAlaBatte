@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SkeletonController : MonoBehaviour
 {
+    public GameObject arrow;
     private int health;
     private int damageAmount = 0;
     private GameObject targetPlayer;
@@ -12,6 +13,8 @@ public class SkeletonController : MonoBehaviour
     private float knockback = 0.5f;
     private bool knockLeft = true;
     private bool canMoove = true;
+    private bool alreadyAtt = false;
+    private bool goodPosL = false;
 
     public float speed = 1.8f;
     public float attackDistance = 4.0f;
@@ -44,7 +47,8 @@ public class SkeletonController : MonoBehaviour
                     {
                         knockLeft = false;
                     }
-                    Hit();
+                    if(!alreadyAtt)
+                        Hit();
                 }
                 else
                 {
@@ -91,19 +95,15 @@ public class SkeletonController : MonoBehaviour
     }
     public void Hit()
     {
-        Player playerScript = targetPlayer.GetComponent<Player>();
-
-        if (playerScript != null)
-        {
-            if (!knockLeft)
-                knockback = -knockback;
-            playerScript.GetDamage(damageAmount, knockback);
-            knockback = 0.5f;
-        }
+        alreadyAtt = true;
+        GameObject spawnedArrow = Instantiate(arrow);
+        spawnedArrow.transform.position = transform.position;
+        if(transform.position.x > targetPlayer.transform.position.x)
+            goodPosL = true;
         else
-        {
-            Debug.Log("Aucun script Player n'a été trouvé sur le GameObject cible.");
-        }
+            goodPosL= false;
+        spawnedArrow.GetComponent<ArrowController>().SetValueArrow(15, goodPosL, true);
+        StartCoroutine(CanAttAgain(1.5f));
     }
 
     void IsGrounded()
@@ -152,6 +152,12 @@ public class SkeletonController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         canMoove = true;
         GetComponent<Rigidbody2D>().gravityScale = 1;
+    }
+
+    IEnumerator CanAttAgain(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        alreadyAtt = false;
     }
 
 }

@@ -38,7 +38,6 @@ public class PiafController : MonoBehaviour
                 {
                     if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("Zombie") || hit.collider.CompareTag("Skeleton"))
                     {
-                        posY = transform.position.y;
                         transform.position = new Vector3(transform.position.x, hit.transform.position.y, transform.position.z);
                     
                     }
@@ -88,7 +87,7 @@ public class PiafController : MonoBehaviour
             {
                 knockback = -knockback;
             }
-            collision.gameObject.GetComponent<Zombiecontroller>().GetDamage(damage, 0.5f);
+            collision.gameObject.GetComponent<ZombieController>().GetDamage(damage, 0.5f);
             knockback = 0.5f;
         }
         else if (collision.gameObject.CompareTag("Skeleton")){
@@ -140,7 +139,7 @@ public class PiafController : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         canMoove = true;
-        GetComponent<Rigidbody2D>().gravityScale = 1;
+        GetComponent<Rigidbody2D>().gravityScale = 0;
     }
     IEnumerator SetHasAttack()
     {

@@ -98,7 +98,7 @@ public class LevitationController : MonoBehaviour
             else if (listAllEnemy[i].CompareTag("Skeleton"))
                 listAllEnemy[i].GetComponent<SkeletonController>().SetCanMoove(false);
             else if (listAllEnemy[i].CompareTag("Zombie"))
-                listAllEnemy[i].GetComponent<Zombiecontroller>().SetCanMoove(false);
+                listAllEnemy[i].GetComponent<ZombieController>().SetCanMoove(false);
         }
         StartCoroutine(WaitTilNewAtt(3f));
     }

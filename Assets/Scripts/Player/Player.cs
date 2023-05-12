@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
+    public GameObject buttonReload;
+
     public float speed = 1f;
     private bool isJumping = false;
     private float saveYpos;
@@ -48,13 +51,20 @@ public class Player : MonoBehaviour
     public void GetDamage(int takenDamage, float knockBack)
     {
         health -= takenDamage;
-        //if (health <= 0)
-        //{
-        //    Destroy(gameObject);
-        //}
+        if (health <= 0)
+        {
+            buttonReload.SetActive(true);
+            Time.timeScale = 0;
+        }
 
         transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z); 
     }
+
+    public void Reload()
+    {
+        SceneManager.LoadScene("FullScene");
+    }
+
     IEnumerator CanJump()
     {
         yield return new WaitForSeconds(2f);

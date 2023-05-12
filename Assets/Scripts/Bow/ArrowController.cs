@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class ArrowController : MonoBehaviour
@@ -33,10 +34,14 @@ public class ArrowController : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    public void SetValueArrow(float valuePower, bool valueDir)
+    public void SetValueArrow(float valuePower, bool valueDir, bool val)
     {
         powerShoot = valuePower;
         goLeft = valueDir;
+        if (val)
+        {
+            arrowHitObject.GetComponent<ArrowHit>().SetSkeletonShoot(true);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

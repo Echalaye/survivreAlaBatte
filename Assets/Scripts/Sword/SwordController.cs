@@ -121,7 +121,7 @@ public class SwordController : MonoBehaviour
             else if (listAllEnemy[i].CompareTag("Skeleton"))
                 listAllEnemy[i].GetComponent<SkeletonController>().GetDamage(damage, knockback);
             else if (listAllEnemy[i].CompareTag("Zombie"))
-                listAllEnemy[i].GetComponent<Zombiecontroller>().GetDamage(damage, knockback);
+                listAllEnemy[i].GetComponent<ZombieController>().GetDamage(damage, knockback);
             
         }
         knockback = 1f;
@@ -147,7 +147,7 @@ public class SwordController : MonoBehaviour
             else if (listAllEnemy[i].CompareTag("Skeleton"))
                 listAllEnemy[i].GetComponent<SkeletonController>().GetDamage(damage, knockback);
             else if (listAllEnemy[i].CompareTag("Zombie"))
-                listAllEnemy[i].GetComponent<Zombiecontroller>().GetDamage(damage, knockback);
+                listAllEnemy[i].GetComponent<ZombieController>().GetDamage(damage, knockback);
 
         }
         knockback = 1f;

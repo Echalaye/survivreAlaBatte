@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 public class BowController : MonoBehaviour
 {
@@ -99,7 +98,7 @@ public class BowController : MonoBehaviour
             arrowPower = 5f;
         canAtt = false;
         timeUntilRelease= 0;
-        spawnedArrow.GetComponent<ArrowController>().SetValueArrow(arrowPower, goodPosL);
+        spawnedArrow.GetComponent<ArrowController>().SetValueArrow(arrowPower, goodPosL, false);
         StartCoroutine(WaitTilNewAtt(1.5f));
     }
 

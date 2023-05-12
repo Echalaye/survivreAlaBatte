@@ -10,9 +10,7 @@ public class SpawnerSkeleton : MonoBehaviour
     private int currentSkeletons= 0;
     private GameObject playerCharacter;
     private bool canSpawnSkeleton = true;
-    private double timeWaitUntilNight = 30.0;
     private double timeUntilSpawn = 10;
-    private float timeWaitDayPeriod = 0;
     private float time = 0;
 
     // Start is called before the first frame update
@@ -29,25 +27,18 @@ public class SpawnerSkeleton : MonoBehaviour
             currentSkeletons = GameObject.FindGameObjectsWithTag("Zombie").Length;
         }
 
-        if (canSpawnSkeleton  && (currentSkeletons < maxSkeletons))
+        if (currentSkeletons < maxSkeletons)
         {
             if (time > timeUntilSpawn)
             {
                 GameObject spawnedSkeleton = Instantiate(Skeleton);
-                spawnedSkeleton.transform.position = transform.position + new Vector3(Random.Range(playerCharacter.transform.position.x - 20, playerCharacter.transform.position.x + 20), 5, 0);
+                spawnedSkeleton.transform.position = new Vector3(Random.Range(playerCharacter.transform.position.x - 20, playerCharacter.transform.position.x + 20), 1, 0);
                 currentSkeletons++;
                 time = 0;
             }
-            
+
             time += Time.deltaTime;
         }
-        if (timeWaitDayPeriod > timeWaitUntilNight)
-        {
-            canSpawnSkeleton = !canSpawnSkeleton;
-            timeWaitDayPeriod = 0;
-        }
-        Debug.Log("Time until night : " + timeWaitDayPeriod + "\ntime Spawn : " + time);
-        timeWaitDayPeriod += Time.deltaTime;
     }
 
 }

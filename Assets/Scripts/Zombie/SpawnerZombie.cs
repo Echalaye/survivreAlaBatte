@@ -9,10 +9,8 @@ public class SpawnerZombie : MonoBehaviour
 
     private int currentZombies = 0;
     private GameObject playerCharacter;
-    private bool canSpawnZombie = false;
-    private double timeWaitUntilNight = 30.0;
+    private bool canSpawnZombie = true;
     private double timeUntilSpawn = 10;
-    private float timeWaitDayPeriod = 0;
     private float time = 0;
 
     // Start is called before the first frame update
@@ -29,25 +27,18 @@ public class SpawnerZombie : MonoBehaviour
             currentZombies = GameObject.FindGameObjectsWithTag("Zombie").Length;
         }
 
-        if (canSpawnZombie  && (currentZombies < maxZombies))
+        if (currentZombies < maxZombies)
         {
             if (time > timeUntilSpawn)
             {
                 GameObject spawnedZombie = Instantiate(Zombie);
-                spawnedZombie.transform.position = transform.position + new Vector3(Random.Range(playerCharacter.transform.position.x - 20, playerCharacter.transform.position.x + 20), 5, 0);
+                spawnedZombie.transform.position = new Vector3(Random.Range(playerCharacter.transform.position.x - 20, playerCharacter.transform.position.x + 20), 1, 0);
                 currentZombies++;
                 time = 0;
             }
             
             time += Time.deltaTime;
         }
-        if (timeWaitDayPeriod > timeWaitUntilNight)
-        {
-            canSpawnZombie = !canSpawnZombie;
-            timeWaitDayPeriod = 0;
-        }
-        Debug.Log("Time until night : " + timeWaitDayPeriod + "\ntime Spawn : " + time);
-        timeWaitDayPeriod += Time.deltaTime;
     }
 
 }

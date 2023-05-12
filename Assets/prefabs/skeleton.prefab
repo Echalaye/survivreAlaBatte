@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddb0281b0bab4764087547554b5ea082, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arrow: {fileID: 8092114646515056749, guid: 51b7dcfd39ec3774cbe0c4bc37779530, type: 3}
   speed: 1.2
   attackDistance: 4
   groundLayer:

@@ -37,7 +37,6 @@ public class BatController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0) && canAtt)
         {
-            Debug.Log("test");
             batSound.Play();
             GigaHit();
 
@@ -59,11 +58,12 @@ public class BatController : MonoBehaviour
                 listAllEnemy[i].GetComponent<ShipController>().GigaBatHitMe(velocityX, velocityY);
             else if (listAllEnemy[i].CompareTag("Skeleton") && !listAllEnemy[i].GetComponent<SkeletonController>().GetCanMoove())
                 listAllEnemy[i].GetComponent<SkeletonController>().GigaBatHitMe(velocityX, velocityY);
-            else if (listAllEnemy[i].CompareTag("Zombie") && !listAllEnemy[i].GetComponent<Zombiecontroller>().GetCanMoove())
-                listAllEnemy[i].GetComponent<Zombiecontroller>().GigaBatHitMe(velocityX, velocityY);
+            else if (listAllEnemy[i].CompareTag("Zombie") && !listAllEnemy[i].GetComponent<ZombieController>().GetCanMoove())
+                listAllEnemy[i].GetComponent<ZombieController>().GigaBatHitMe(velocityX, velocityY);
         }
         canAtt = false;
         velocityX = 100;
+        listAllEnemy.Clear();
         StartCoroutine(CanAttAgain(1f));
     }
 

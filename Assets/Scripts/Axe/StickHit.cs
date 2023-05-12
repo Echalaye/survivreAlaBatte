@@ -27,7 +27,7 @@ public class StickHit : MonoBehaviour
             else if (collision.CompareTag("Skeleton"))
                 collision.GetComponent<SkeletonController>().GetDamage(damage, knockback);
             else if (collision.CompareTag("Zombie"))
-                collision.GetComponent<Zombiecontroller>().GetDamage(damage, knockback);
+                collision.GetComponent<ZombieController>().GetDamage(damage, knockback);
             attOn= false;
         }
     }
