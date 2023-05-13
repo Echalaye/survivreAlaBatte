@@ -10,7 +10,8 @@ public class BatController : MonoBehaviour
     private bool goodPosR = true;
     private bool goodPosL = false;
     private float velocityX = 10;
-    private float velocityY = 10;
+    private float velocityY = 50;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
@@ -18,7 +19,7 @@ public class BatController : MonoBehaviour
             if (!goodPosL)
             {
                 transform.position = new Vector3(transform.position.x - 3f, transform.position.y, transform.position.z);
-                transform.Rotate(new Vector3(180, 0, 0));
+                transform.Rotate(new Vector3(180, 0, 0), Space.Self);
                 goodPosL = true;
                 goodPosR = false;
             }
@@ -28,7 +29,7 @@ public class BatController : MonoBehaviour
             if (!goodPosR)
             {
                 transform.position = new Vector3(transform.position.x + 3f, transform.position.y, transform.position.z);
-                transform.Rotate(new Vector3(180, 0, 0));
+                transform.Rotate(new Vector3(180, 0, 0), Space.Self);
                 goodPosR = true;
                 goodPosL = false;
             }
@@ -46,7 +47,7 @@ public class BatController : MonoBehaviour
 
     private void GigaHit()
     {
-        if (!goodPosL)
+        if (goodPosL)
         {
             velocityX *= -1;
         }
@@ -62,7 +63,7 @@ public class BatController : MonoBehaviour
                 listAllEnemy[i].GetComponent<ZombieController>().GigaBatHitMe(velocityX, velocityY);
         }
         canAtt = false;
-        velocityX = 100;
+        velocityX = 10;
         listAllEnemy.Clear();
         StartCoroutine(CanAttAgain(1f));
     }
@@ -83,6 +84,20 @@ public class BatController : MonoBehaviour
         }
     }
 
+    public void SetPosBat(bool valLeft)
+    {
+        canAtt = true;
+        if (valLeft)
+        {
+            if (!goodPosL)
+            {
+                transform.position = new Vector3(transform.position.x - 3f, transform.position.y, transform.position.z);
+                transform.Rotate(new Vector3(180, 0, 0), Space.Self);
+                goodPosL = true;
+                goodPosR = false;
+            }
+        }
+    }
     IEnumerator CanAttAgain(float delay)
     {
         yield return new WaitForSeconds(delay);

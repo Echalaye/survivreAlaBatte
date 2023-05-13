@@ -50,7 +50,7 @@ public class BowController : MonoBehaviour
         {
             if (!goodPosL)
             {
-                transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
+                transform.position = new Vector3(transform.position.x - 1.3f, transform.position.y, transform.position.z);
                 transform.Rotate(new Vector3(0, 180, 0), Space.Self);
                 goodPosL = true;
                 goodPosR = false;
@@ -60,7 +60,7 @@ public class BowController : MonoBehaviour
         {
             if (!goodPosR)
             {
-                transform.position = new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z);
+                transform.position = new Vector3(transform.position.x + 1.3f, transform.position.y, transform.position.z);
                 transform.Rotate(new Vector3(0, 180, 0), Space.Self);
                 goodPosR = true;
                 goodPosL = false;
@@ -101,7 +101,20 @@ public class BowController : MonoBehaviour
         spawnedArrow.GetComponent<ArrowController>().SetValueArrow(arrowPower, goodPosL, false);
         StartCoroutine(WaitTilNewAtt(1.5f));
     }
-
+    public void SetPosBow(bool valLeft)
+    {
+        canAtt = true;
+        if (valLeft)
+        {
+            if (!goodPosL)
+            {
+                transform.position = new Vector3(transform.position.x - 1.3f, transform.position.y, transform.position.z);
+                transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+                goodPosL = true;
+                goodPosR = false;
+            }
+        }
+    }
     IEnumerator WaitTilNewAtt(float delay)
     {
         yield return new WaitForSeconds(delay);

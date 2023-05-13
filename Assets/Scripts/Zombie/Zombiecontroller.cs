@@ -12,6 +12,8 @@ public class ZombieController : MonoBehaviour
     private float knockback = 1.5f;
     private bool knockLeft = true;
     private bool canMoove = true;
+    private bool goodPosL = false;
+    private bool goodPosR = true;
 
     // Start is called before the first frame update
     void Start()
@@ -36,10 +38,22 @@ public class ZombieController : MonoBehaviour
                 if(transform.position.x < targetPlayer.transform.position.x)
                 {
                     knockLeft = false;
+                    if (!goodPosR)
+                    {
+                        transform.Rotate(new Vector3(0,180,0), Space.Self);
+                        goodPosL = false;
+                        goodPosR = true;
+                    }
                 }
                 else
                 {
                     knockLeft = true;
+                    if (!goodPosL)
+                    {
+                        transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+                        goodPosL = true;
+                        goodPosR = false;
+                    }
                 }
 
                 transform.position = Vector3.MoveTowards(transform.position, targetPlayer.transform.position, step);
@@ -51,17 +65,10 @@ public class ZombieController : MonoBehaviour
     {
         Player playerScript = targetPlayer.GetComponent<Player>();
         
-        if (playerScript != null)
-        {
-            if (!knockLeft)
-                knockback = -knockback;
-            playerScript.GetDamage(damageAmount, knockback);
-            knockback = 1.5f;
-        }
-        else
-        {
-            Debug.Log("Aucun script Player n'a été trouvé sur le GameObject cible.");
-        }
+        if (!knockLeft)
+            knockback *= -1;
+        playerScript.GetDamage(damageAmount, knockback);
+        knockback = 1.5f;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -71,6 +78,7 @@ public class ZombieController : MonoBehaviour
             Hit();
         }
     }
+
 
     public void GetDamage(int takenDamage, float knockBack)
     {

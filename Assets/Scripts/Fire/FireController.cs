@@ -96,7 +96,20 @@ public class FireController : MonoBehaviour
         timeSpecial = 0;
         StartCoroutine(DelayShootFireBall(2f));
     }
-
+    public void SetPosFire(bool valLeft)
+    {
+        canAtt = true;
+        if (valLeft)
+        {
+            if (!goodPosL)
+            {
+                transform.position = new Vector3(transform.position.x - 1.6f, transform.position.y, transform.position.z);
+                transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+                goodPosL = true;
+                goodPosR = false;
+            }
+        }
+    }
     IEnumerator DelayShootFireBall(float delay)
     {
         yield return new WaitForSeconds(delay);

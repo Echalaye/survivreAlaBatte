@@ -9,6 +9,8 @@ public class ShipController : MonoBehaviour
     public float speed = 1.5f;
     private int health = 30;
     private bool canMoove = true;
+    private bool goodPosL =false;
+    private bool goodPosR =true;
     public Rigidbody2D rb;
     private void Start()
     {
@@ -23,10 +25,22 @@ public class ShipController : MonoBehaviour
             if (goLeft)
             {
                 transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.left, speed * Time.deltaTime);
+                if(!goodPosL)
+                {
+                    transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+                    goodPosL = true;
+                    goodPosR= false;
+                }
             }
             else
             {
                 transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right, speed * Time.deltaTime);
+                if (!goodPosR)
+                {
+                    transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+                    goodPosL = false;
+                    goodPosR = true;
+                }
             }
         }
     }

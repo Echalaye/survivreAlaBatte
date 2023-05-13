@@ -43,11 +43,16 @@ public class BoomerangController : MonoBehaviour
             {
                 goBack = false;
                 rotate = false;
-                if(goodPosL)
+                if (goodPosL)
+                {
                     transform.position = new Vector3(player.transform.position.x - 0.6f, player.transform.position.y, player.transform.position.z);
+                    transform.rotation = new Quaternion(0, 180, 0, 0);
+                }
                 else
+                {
                     transform.position = new Vector3(player.transform.position.x + 0.6f, player.transform.position.y, player.transform.position.z);
-                transform.rotation = new Quaternion(0, 0, 0, 0);
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
+                }
                 StartCoroutine(WaitUntilNextAtt(0.8f));
             }
         }
@@ -67,6 +72,7 @@ public class BoomerangController : MonoBehaviour
             if (!goodPosL)
             {
                 transform.position = new Vector3(transform.position.x - 1.2f, transform.position.y, transform.position.z);
+                transform.Rotate(new Vector3(0, 180, 0), Space.Self);
                 goodPosL = true;
                 goodPosR = false;
             }
@@ -76,6 +82,7 @@ public class BoomerangController : MonoBehaviour
             if (!goodPosR)
             {
                 transform.position = new Vector3(transform.position.x + 1.2f, transform.position.y, transform.position.z);
+                transform.Rotate(new Vector3(0, 180, 0), Space.Self);
                 goodPosR = true;
                 goodPosL = false;
             }
@@ -108,7 +115,20 @@ public class BoomerangController : MonoBehaviour
         boomerangHitObject.GetComponent<BoomerangHit>().SetBoomerangIsShoot(true);
         distanceX = 3f;
     }
-
+    public void SetPosBoomerang(bool valLeft)
+    {
+        canAtt = true;
+        if (valLeft)
+        {
+            if (!goodPosL)
+            {
+                transform.position = new Vector3(transform.position.x - 1.2f, transform.position.y, transform.position.z);
+                transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+                goodPosL = true;
+                goodPosR = false;
+            }
+        }
+    }
     IEnumerator WaitUntilNextAtt(float delay)
     {
         yield return new WaitForSeconds(delay);

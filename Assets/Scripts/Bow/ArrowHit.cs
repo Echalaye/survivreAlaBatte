@@ -24,7 +24,7 @@ public class ArrowHit : MonoBehaviour
             if (skeletonShoot)
             {
                 if (collision.CompareTag("Player"))
-                    collision.GetComponent<Player>().GetDamage(10, 1f);
+                    collision.GetComponent<Player>().GetDamage(10, knockback);
             }
             else
             { 
@@ -43,6 +43,6 @@ public class ArrowHit : MonoBehaviour
 
     public void SetSkeletonShoot(bool val)
     {
-
+        skeletonShoot= val;
     }
 }

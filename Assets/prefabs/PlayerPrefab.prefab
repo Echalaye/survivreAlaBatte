@@ -193,6 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 4813346032708601311}
+  buttonReload: {fileID: 0}
+  lifeText: {fileID: 0}
   speed: 1
 --- !u!61 &4976432907378343231
 BoxCollider2D:
@@ -253,6 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1d43c9f7b37c7e41b45e83e70f41ee9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 4976432907378343229}
   inventoryObjectList:
   - {fileID: 4895157464733882496}
   - {fileID: 7347225593114721395}
@@ -696,7 +699,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4631602106170170288, guid: 776e5ad2a84d7e4409b3b02f1c8c757e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 4631602106170170288, guid: 776e5ad2a84d7e4409b3b02f1c8c757e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -781,7 +784,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2796625043020287252, guid: b1e08e6feabbcf9449a0a755bdc6ea63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2796625043020287252, guid: b1e08e6feabbcf9449a0a755bdc6ea63, type: 3}
       propertyPath: m_LocalPosition.y

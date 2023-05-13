@@ -42,7 +42,8 @@ public class SwordController : MonoBehaviour
             knockLeft = true;
             if(!goodPosL)
             {
-                transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
+                transform.position = new Vector3(transform.position.x - 1.6f, transform.position.y, transform.position.z);
+                transform.Rotate(new Vector3(0,180,0), Space.Self);
                 goodPosL = true;
                 goodPosR = false;
             }
@@ -52,7 +53,8 @@ public class SwordController : MonoBehaviour
             knockLeft = false;
             if(!goodPosR)
             {
-                transform.position = new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z);
+                transform.position = new Vector3(transform.position.x + 1.6f, transform.position.y, transform.position.z);
+                transform.Rotate(new Vector3(0, 180, 0), Space.Self);
                 goodPosR = true;
                 goodPosL = false;
             }
@@ -156,7 +158,20 @@ public class SwordController : MonoBehaviour
         canAtt = false;
         StartCoroutine(WaitTilNewAtt(1f));
     }
-
+    public void SetPosSword(bool valLeft)
+    {
+        canAtt = true;
+        if (valLeft)
+        {
+            if (!goodPosL)
+            {
+                transform.position = new Vector3(transform.position.x - 1.6f, transform.position.y, transform.position.z);
+                transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+                goodPosL = true;
+                goodPosR = false;
+            }
+        }
+    }
     IEnumerator WaitTilNewAtt(float delay)
     {
         yield return new WaitForSeconds(delay);

@@ -6,15 +6,13 @@ public class SkeletonController : MonoBehaviour
 {
     public GameObject arrow;
     private int health;
-    private int damageAmount = 0;
     private GameObject targetPlayer;
     private Rigidbody2D rb;
     private bool canJump = true;
-    private float knockback = 0.5f;
-    private bool knockLeft = true;
     private bool canMoove = true;
     private bool alreadyAtt = false;
     private bool goodPosL = false;
+    private bool goodPosR = true;
 
     public float speed = 1.8f;
     public float attackDistance = 4.0f;
@@ -36,6 +34,19 @@ public class SkeletonController : MonoBehaviour
     {
         if (canMoove)
         {
+            if (transform.position.x > targetPlayer.transform.position.x && !goodPosL)
+            {
+                transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+                goodPosL = true;
+                goodPosR = false;
+            }
+            else if(transform.position.x < targetPlayer.transform.position.x && !goodPosR)
+            {
+                transform.Rotate(new Vector3(0,180,0), Space.Self);
+                goodPosL = false;
+                goodPosR = true;
+            }
+
             if (targetPlayer != null)
             {
                 float distanceToPlayer = Vector3.Distance(transform.position, targetPlayer.transform.position);
@@ -43,10 +54,6 @@ public class SkeletonController : MonoBehaviour
 
                 if (distanceToPlayer <= attackDistance)
                 { 
-                    if(transform.position.x > targetPlayer.transform.position.x)
-                    {
-                        knockLeft = false;
-                    }
                     if(!alreadyAtt)
                         Hit();
                 }
@@ -62,7 +69,6 @@ public class SkeletonController : MonoBehaviour
                         RaycastHit2D hitL = Physics2D.Raycast(transform.position + Vector3.left, Vector3.left, 0.5f);
                         if (hitR.collider != null || hitL.collider != null)
                         {
-                            Debug.Log("AAAAAAAAAAAAAAh");
                             // Appliquez la force de saut au Rigidbody2D du squelette
                             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                             canJump = false;
@@ -77,7 +83,6 @@ public class SkeletonController : MonoBehaviour
 
                         if ((holeHitR.collider == null || holeHitL.collider == null))
                         {
-                            Debug.Log("TROOOOOOOOOOOOOOOOOU");
                             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
                             canJump = false;
                         }
@@ -96,13 +101,17 @@ public class SkeletonController : MonoBehaviour
     public void Hit()
     {
         alreadyAtt = true;
-        GameObject spawnedArrow = Instantiate(arrow);
-        spawnedArrow.transform.position = transform.position;
-        if(transform.position.x > targetPlayer.transform.position.x)
-            goodPosL = true;
+        if (goodPosL)
+        {
+            GameObject spawnedArrow = Instantiate(arrow, new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z), transform.rotation);
+            spawnedArrow.GetComponent<ArrowController>().SetValueArrow(15, goodPosL, true);
+        }
         else
-            goodPosL= false;
-        spawnedArrow.GetComponent<ArrowController>().SetValueArrow(15, goodPosL, true);
+        {
+            GameObject spawnedArrow = Instantiate(arrow, new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z), transform.rotation);
+            spawnedArrow.GetComponent<ArrowController>().SetValueArrow(15, goodPosL, true);
+        }
+        
         StartCoroutine(CanAttAgain(1.5f));
     }
 

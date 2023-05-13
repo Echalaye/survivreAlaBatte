@@ -16,7 +16,7 @@ public class AxeController : MonoBehaviour
             axe.GetComponent<AxeHit>().setKnockLeft(true);
             if (!goodPosL)
             {
-                transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
+                transform.position = new Vector3(transform.position.x - 0.8f, transform.position.y, transform.position.z);
                 transform.Rotate(new Vector3(0, 180, 0), Space.Self);
                 goodPosL = true;
                 goodPosR = false;
@@ -27,14 +27,13 @@ public class AxeController : MonoBehaviour
             axe.GetComponent<AxeHit>().setKnockLeft(false);
             if (!goodPosR)
             {
-                transform.position = new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z);
+                transform.position = new Vector3(transform.position.x + 0.8f, transform.position.y, transform.position.z);
                 transform.Rotate(new Vector3(0, 180, 0), Space.Self);
                 goodPosR = true;
                 goodPosL = false;
             }
 
         }
-
 
         if (Input.GetMouseButtonDown(0) && canAtt)
         {
@@ -49,6 +48,33 @@ public class AxeController : MonoBehaviour
 
             canAtt = false;
             StartCoroutine(DelayAtt());
+        }
+    }
+
+    public void SetPosAxe(bool valLeft)
+    {
+        if (!canAtt)
+        {
+            transform.rotation = new Quaternion(0, 0, 0, 0);
+            if (goodPosR)
+                transform.position = new Vector3(transform.position.x - 0.85f, transform.position.y + 0.7f, 0);
+            else
+            {
+                transform.position = new Vector3(transform.position.x + 0.85f, transform.position.y + 0.7f, 0);
+                transform.Rotate(new Vector3(0,180,0), Space.Self);
+            }
+
+        }
+        canAtt = true;
+        if (valLeft)
+        {
+            if (!goodPosL)
+            {
+                transform.position = new Vector3(transform.position.x - 0.8f, transform.position.y, transform.position.z);
+                transform.Rotate(new Vector3(0, 180, 0), Space.Self);
+                goodPosL = true;
+                goodPosR = false;
+            }
         }
     }
 

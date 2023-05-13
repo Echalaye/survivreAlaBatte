@@ -1,27 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rb;
     public GameObject buttonReload;
+    public TextMeshProUGUI lifeText;
 
     public float speed = 1f;
     private bool isJumping = false;
-    private float saveYpos;
-    private float jumpAmount = 10;
+    private float jumpAmount = 7;
     private int health = 100;
-    // Update is called once per frame
+    private bool goLeft = false;
+
+    private void Start()
+    {
+        lifeText.text = health.ToString();
+    }
     void Update()
     {
 
- 
+        
         if (Input.GetKey(KeyCode.A))
+        {
+            goLeft = true;
             Moove(Vector3.left);
+        }
         else if (Input.GetKey(KeyCode.D))
+        {
+            goLeft = false;
             Moove(Vector3.right);
+        }
         
         if (Input.GetKeyDown(KeyCode.Space) && !isJumping)
             Jump();
@@ -56,12 +69,18 @@ public class Player : MonoBehaviour
             buttonReload.SetActive(true);
             Time.timeScale = 0;
         }
-
+        lifeText.text = health.ToString();
         transform.position = new Vector3(transform.position.x - knockBack, transform.position.y, transform.position.z); 
+    }
+
+    public bool GetGoLeft()
+    {
+        return goLeft;
     }
 
     public void Reload()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("FullScene");
     }
 
