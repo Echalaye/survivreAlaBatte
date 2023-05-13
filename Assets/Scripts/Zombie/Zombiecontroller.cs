@@ -14,6 +14,7 @@ public class ZombieController : MonoBehaviour
     private bool canMoove = true;
     private bool goodPosL = false;
     private bool goodPosR = true;
+    private bool canAtt = true;
 
     // Start is called before the first frame update
     void Start()
@@ -63,17 +64,19 @@ public class ZombieController : MonoBehaviour
 
     public void Hit()
     {
+        canAtt = false;
         Player playerScript = targetPlayer.GetComponent<Player>();
         
         if (!knockLeft)
             knockback *= -1;
         playerScript.GetDamage(damageAmount, knockback);
         knockback = 1.5f;
+        StartCoroutine(WaitUntilNextAtt(1f));
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && canAtt)
         {
             Hit();
         }
@@ -95,7 +98,7 @@ public class ZombieController : MonoBehaviour
     public void SetCanMoove(bool value)
     {
         canMoove = value;
-        StartCoroutine(canMooveAgain());
+        StartCoroutine(CanMooveAgain());
     }
     public bool GetCanMoove()
     {
@@ -111,11 +114,17 @@ public class ZombieController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         Destroy(gameObject);
     }
-    IEnumerator canMooveAgain()
+    IEnumerator CanMooveAgain()
     {
         yield return new WaitForSeconds(2f);
         canMoove = true;
         GetComponent<Rigidbody2D>().gravityScale = 1;
+    }
+
+    IEnumerator WaitUntilNextAtt(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        canAtt= true;
     }
 }
 
